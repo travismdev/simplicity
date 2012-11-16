@@ -133,6 +133,10 @@ main:
      PWM2_Init(50000)
      PWM1_Start()
      PWM2_Start()
+
+     asm
+        BSF OPTION_REG,RBPU
+     end asm
      
      ' We are only driving our motors forward (M1)
      PORTA.RA0 = 0
