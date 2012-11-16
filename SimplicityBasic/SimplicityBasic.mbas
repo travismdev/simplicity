@@ -1,0 +1,164 @@
+program SimplicityBasic
+
+Dim s1,s2,s3,s4,s5,s6,s7 as Integer
+Dim s_array as Integer[8]
+
+'-------------------------------------------------------------------------------
+' Emergency motor stop
+'-------------------------------------------------------------------------------
+ sub procedure StopMotors
+    PWM1_Set_Duty(0)
+    PWM2_Set_Duty(0)
+end sub
+
+'-------------------------------------------------------------------------------
+' Read the QTR-8RC sensor module, set pins as output and set high then delay
+' for 10us and set the pins as input.
+'-------------------------------------------------------------------------------
+sub procedure InitSensors
+     TRISB = 0x00
+     PORTB = 0xFF
+
+     delay_us(10)
+     
+     TRISB = 0xFF
+end sub
+
+'-------------------------------------------------------------------------------
+' Here we actually read the sensor line to find our values
+'-------------------------------------------------------------------------------
+sub procedure ReadSensors
+    s1 = 1
+    s2 = 1
+    s3 = 1
+    s4 = 1
+    s5 = 1
+    s6 = 1
+    s7 = 1
+    
+    '''''''''''''''''''''
+    ' Sensor Number 1
+    '''''''''''''''''''''
+    while PORTB.RB7 <> 0
+           s1 = s1 + 1
+           if s1 >= 500 then break end if
+    wend
+    
+    '''''''''''''''''''''
+    ' Sensor Number 2
+    '''''''''''''''''''''
+    while PORTB.RB6 <> 0
+           s2 = s2 + 1
+           if s2 >= 500 then break end if
+    wend
+    
+    '''''''''''''''''''''
+    ' Sensor Number 3
+    '''''''''''''''''''''
+    while PORTB.RB5 <> 0
+           s3 = s3 + 1
+           if s3 >= 500 then break end if
+    wend
+    
+    '''''''''''''''''''''
+    ' Sensor Number 4
+    '''''''''''''''''''''
+    while PORTB.RB4 <> 0
+           s4 = s4 + 1
+           if s4 >= 500 then break end if
+    wend
+    
+    '''''''''''''''''''''
+    ' Sensor Number 5
+    '''''''''''''''''''''
+    while PORTB.RB3 <> 0
+           s5 = s5 + 1
+           if s5 >= 500 then break end if
+    wend
+    
+    '''''''''''''''''''''
+    ' Sensor Number 6
+    '''''''''''''''''''''
+    while PORTB.RB2 <> 0
+           s6 = s6 + 1
+           if s6 >= 500 then break end if
+    wend
+     
+    '''''''''''''''''''''
+    ' Sensor Number 7
+    '''''''''''''''''''''
+    while PORTB.RB1 <> 0
+           s7 = s7 + 1
+           if s7 >= 500 then break end if
+    wend
+end sub
+
+'-------------------------------------------------------------------------------
+' Testing to read the average sensor value, Read 10 times and return the average
+' in s_array
+'-------------------------------------------------------------------------------
+sub procedure ReadAverage
+Dim l_count as Integer
+    l_count = 0
+    
+    InitSensors()
+    for l_count = 0 to 9
+        ReadSensors()
+        s_array[1] = s_array[1] + s1
+        s_array[2] = s_array[2] + s2
+        s_array[3] = s_array[3] + s3
+        s_array[4] = s_array[4] + s4
+        s_array[5] = s_array[5] + s5
+        s_array[6] = s_array[6] + s6
+        s_array[7] = s_array[7] + s7
+    next l_count
+    
+    for l_count = 0 to 6
+        s_array[l_count] = s_array[l_count] / 10
+    next l_count
+
+end sub
+
+'-------------------------------------------------------------------------------
+' Main program begins here, we set up our ports and PWM and read the sensors
+' then manipulate the data to follow the line
+'-------------------------------------------------------------------------------
+main:
+     ADCON1  = 6
+     PORTA   = 0
+     TRISA   = 0
+     PORTC   = 0
+     TRISC   = 0
+     PWM1_Init(50000)
+     PWM2_Init(50000)
+     PWM1_Start()
+     PWM2_Start()
+     
+     ' We are only driving our motors forward (M1)
+     PORTA.RA0 = 0
+     PORTA.RA1 = 1
+     
+     ' We are only driving our motors forward (M2)
+     PORTA.RA2 = 0
+     PORTA.RA3 = 1
+     
+     ' Set initial duty cycle
+     StopMotors()
+     
+'-------------------------------------------------------------------------------
+' Actual program starts here by reading sensors and setting PWM accordingly
+'-------------------------------------------------------------------------------
+     while 1
+            InitSensors()
+            ReadSensors()
+            
+            if s3 and s4 < 200 then
+               'PWM1_Set_Duty(200)
+               PWM1_Set_Duty(255)
+            end if
+            
+            
+
+
+     wend
+end.
