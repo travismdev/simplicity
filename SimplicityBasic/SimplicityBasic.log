@@ -2,12 +2,14 @@
 diagnostics: 0	155	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
 diagnostics: 0	133	Compilation Started	C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas
 hint: 1	1015	Hint: Compiling unit "C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas"	SimplicityBasic.mbas
-error: 91	304	Syntax error: Expected "simple type or pointer" but "array" found	SimplicityBasic.mbas
-error: 92	304	Syntax error: Expected "array" but "integer" found	SimplicityBasic.mbas
-error: 92	304	Syntax error: Expected "array" but "integer" found	SimplicityBasic.mbas
-error: 92	341	Operator "<>" not applicable to these operands "sensor"	SimplicityBasic.mbas
-error: 92	321	Internal error: "prepare operands failed"	SimplicityBasic.mbas
-error: 95	304	Syntax error: Expected "wend" but "if" found	SimplicityBasic.mbas
-error: 95	304	Syntax error: Expected "end" but "sensor" found	SimplicityBasic.mbas
-error: 95	304	Syntax error: Expected "." but "[" found	SimplicityBasic.mbas
-error: 0	102	Finished (with errors): 16 Nov 2012, 18:21:31	SimplicityBasic.mbppi
+hint: 40	1001	Hint: Variable "s_count" has been declared, but not used	SimplicityBasic.mbas
+hint: 40	1011	Hint: Variable "s_count" has been eliminated by optimizer	SimplicityBasic.mbas
+hint: 157	1010	Hint: Unit "SimplicityBasic.mbas" has been recompiled	SimplicityBasic.mbas
+diagnostics: 0	134	Compiled Successfully	C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas
+diagnostics: 0	139	All files Compiled in 47 ms	 
+hint: 0	1144	Used RAM (bytes): 23 (7%)  Free RAM (bytes): 329 (93%)	Used RAM (bytes): 23 (7%)  Free RAM (bytes): 329 (93%)
+hint: 0	1144	Used ROM (program words): 582 (7%)  Free ROM (program words): 7610 (93%)	Used ROM (program words): 582 (7%)  Free ROM (program words): 7610 (93%)
+diagnostics: 0	145	Project Linked Successfully	SimplicityBasic.mbppi
+diagnostics: 0	140	Linked in 62 ms	 
+diagnostics: 0	141	Project 'SimplicityBasic.mbppi' completed: 125 ms	 
+diagnostics: 0	103	Finished successfully: 16 Nov 2012, 22:26:36	SimplicityBasic.mbppi

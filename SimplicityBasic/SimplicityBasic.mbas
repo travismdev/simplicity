@@ -39,16 +39,40 @@ end sub
 sub procedure ReadSensors
 Dim s_count as Byte
     
-    for s_count = 0 to 6
-       if sensor[s_count] <> 0  then
-          while sensor[s_count] <> 0
-                sensor[s_count] = sensor[s_count] + 1
-                if sensor[s_count] >= 800 then
-                   break 
-                end if
-          wend
-       end if
-    next s_count
+    while PORTB.RB7 <> 0
+          sensor[1] = sensor[1] + 1
+          if sensor[1] >= 30 then break end if
+    wend
+    
+     while PORTB.RB6 <> 0
+          sensor[2] = sensor[2] + 1
+          if sensor[2] >= 30 then break end if
+    wend
+    
+     while PORTB.RB5 <> 0
+          sensor[3] = sensor[3] + 1
+          if sensor[3] >= 30 then break end if
+    wend
+    
+     while PORTB.RB4 <> 0
+          sensor[4] = sensor[4] + 1
+          if sensor[4] >= 30 then break end if
+    wend
+    
+     while PORTB.RB3 <> 0
+          sensor[5] = sensor[5] + 1
+          if sensor[5] >= 30 then break end if
+    wend
+    
+     while PORTB.RB2 <> 0
+          sensor[6] = sensor[6] + 1
+          if sensor[6] >= 30 then break end if
+    wend
+    
+     while PORTB.RB1 <> 0
+          sensor[7] = sensor[7] + 1
+          if sensor[7] >= 30 then break end if
+    wend
 
 end sub
 
@@ -85,38 +109,49 @@ main:
 ' Actual program starts here by reading sensors and setting PWM accordingly
 '-------------------------------------------------------------------------------
      while 1
+
             InitSensors()
             ReadSensors()
             
-            if sensor[1] < 100 then
-               PWM1_Set_Duty(180)
+            if sensor[1] and
+               sensor[2] and
+               sensor[3] and
+               sensor[4] and
+               sensor[5] and
+               sensor[6] > 24 then
+               StopMotors()
+            end if
+            
+            if sensor[1] and
+               sensor[2] and
+               sensor[3] and
+               sensor[4] and
+               sensor[5] and
+               sensor[6] < 22 then
+               PWM1_Set_Duty(160)
+               PWM2_Set_Duty(160)
+            end if
+            
+            if sensor[7] < 22 then
+               PWM1_Set_Duty(80)
                PWM2_Set_Duty(200)
             end if
             
-            if sensor[2] < 100 then
-               PWM1_Set_Duty(190)
-               PWM2_Set_Duty(200)
-            end if
-            
-            if sensor[3] < 100 then
-               PWM1_Set_Duty(200)
-               PWM2_Set_Duty(200)
+            if sensor[5] or sensor[6] < 22 then
+               PWM1_Set_Duty(100)
+               PWM2_Set_Duty(160)
             end if
 
-            if sensor[4] < 100 then
-               PWM1_Set_Duty(200)
-               PWM2_Set_Duty(190)
+            if sensor[3] or sensor[4] < 22 then
+               PWM1_Set_Duty(160)
+               PWM2_Set_Duty(160)
             end if
             
-            if sensor[5] < 100 then
+            if sensor[1] or sensor[2] < 22 then
                PWM1_Set_Duty(200)
-               PWM2_Set_Duty(180)
+               PWM2_Set_Duty(80)
             end if
             
-            if sensor[6] or sensor[7] < 100 then
-               PWM1_Set_Duty(200)
-               PWM1_Set_Duty(170)
-            end if
 
      wend
 end.
