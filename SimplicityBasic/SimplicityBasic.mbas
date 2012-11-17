@@ -1,7 +1,7 @@
 program SimplicityBasic
 
-Dim s1,s2,s3,s4,s5,s6,s7 as Integer
-Dim s_array as Integer[8]
+' This will hold our sensor values
+Dim sensor as Integer[8]
 
 '-------------------------------------------------------------------------------
 ' Emergency motor stop
@@ -22,115 +22,33 @@ sub procedure InitSensors
      delay_us(10)
      
      TRISB = 0xFF
+     
+     ' Set up initial sensor array
+     sensor[1] = PORTB.RB7
+     sensor[2] = PORTB.RB6
+     sensor[3] = PORTB.RB5
+     sensor[4] = PORTB.RB4
+     sensor[5] = PORTB.RB3
+     sensor[6] = PORTB.RB2
+     sensor[7] = PORTB.RB1
 end sub
 
 '-------------------------------------------------------------------------------
 ' Here we actually read the sensor line to find our values
 '-------------------------------------------------------------------------------
 sub procedure ReadSensors
-    s1 = 1
-    s2 = 1
-    s3 = 1
-    s4 = 1
-    s5 = 1
-    s6 = 1
-    s7 = 1
+Dim s_count as Byte
     
-    '''''''''''''''''''''
-    ' Sensor Number 1
-    '''''''''''''''''''''
-    if PORTB.RB7 <> 0  then
-       while PORTB.RB7 <> 0
-           s1 = s1 + 1
-           if s1 >= 800 then break end if
-       wend
-    end if
-    
-    '''''''''''''''''''''
-    ' Sensor Number 2
-    '''''''''''''''''''''
-    if PORTB.RB6 <> 0  then
-       while PORTB.RB6 <> 0
-           s2 = s2 + 1
-           if s2 >= 800 then break end if
-       wend
-    end if
-    
-    '''''''''''''''''''''
-    ' Sensor Number 3
-    '''''''''''''''''''''
-    if PORTB.RB5 <> 0 then
-       while PORTB.RB5 <> 0
-           s3 = s3 + 1
-           if s3 >= 1000 then break end if
-       wend
-    end if
-    
-    '''''''''''''''''''''
-    ' Sensor Number 4
-    '''''''''''''''''''''
-    if PORTB.RB4 <> 0 then
-       while PORTB.RB4 <> 0
-           s4 = s4 + 1
-           if s4 >= 1000 then break end if
-       wend
-    end if
-    
-    '''''''''''''''''''''
-    ' Sensor Number 5
-    '''''''''''''''''''''
-    if PORTB.RB3 <> 0 then
-       while PORTB.RB3 <> 0
-           s5 = s5 + 1
-           if s5 >= 1000 then break end if
-       wend
-    end if
-    
-
-    '''''''''''''''''''''
-    ' Sensor Number 6
-    '''''''''''''''''''''
-    if PORTB.RB2 <> 0 then
-       while PORTB.RB2 <> 0
-           s6 = s6 + 1
-           if s6 >= 1000 then break end if
-       wend
-    end if
-     
-    '''''''''''''''''''''
-    ' Sensor Number 7
-    '''''''''''''''''''''
-    if PORTB.RB1 <> 0 then
-       while PORTB.RB1 <> 0
-           s7 = s7 + 1
-           if s7 >= 1000 then break end if
-       wend
-    end if
-end sub
-
-'-------------------------------------------------------------------------------
-' Testing to read the average sensor value, Read 10 times and return the average
-' in s_array
-'-------------------------------------------------------------------------------
-sub procedure ReadAverage
-Dim l_count as Integer
-    l_count = 0
-    
-    InitSensors()
-    for l_count = 0 to 9
-        ReadSensors()
-        s_array[1] = s_array[1] + s1
-        s_array[2] = s_array[2] + s2
-        s_array[3] = s_array[3] + s3
-        s_array[4] = s_array[4] + s4
-        s_array[5] = s_array[5] + s5
-        s_array[6] = s_array[6] + s6
-        s_array[7] = s_array[7] + s7
-    next l_count
-    
-    for l_count = 0 to 6
-        s_array[l_count] = s_array[l_count] / 10
-    next l_count
+    for s_count = 0 to 6
+       if sensor[s_count] <> 0  then
+          while sensor[s_count] <> 0
+                sensor[s_count] = sensor[s_count] + 1
+                if sensor[s_count] >= 800 then
+                   break 
+                end if
+          wend
+       end if
+    next s_count
 
 end sub
 
@@ -170,32 +88,32 @@ main:
             InitSensors()
             ReadSensors()
             
-            if s1 < 100 then
+            if sensor[1] < 100 then
                PWM1_Set_Duty(180)
                PWM2_Set_Duty(200)
             end if
             
-            if s2 < 100 then
+            if sensor[2] < 100 then
                PWM1_Set_Duty(190)
                PWM2_Set_Duty(200)
             end if
             
-            if s3 < 100 then
+            if sensor[3] < 100 then
                PWM1_Set_Duty(200)
                PWM2_Set_Duty(200)
             end if
 
-            if s4 < 100 then
+            if sensor[4] < 100 then
                PWM1_Set_Duty(200)
                PWM2_Set_Duty(190)
             end if
             
-            if s5 < 100 then
+            if sensor[5] < 100 then
                PWM1_Set_Duty(200)
                PWM2_Set_Duty(180)
             end if
             
-            if s6 or s7 < 100 then
+            if sensor[6] or sensor[7] < 100 then
                PWM1_Set_Duty(200)
                PWM1_Set_Duty(170)
             end if

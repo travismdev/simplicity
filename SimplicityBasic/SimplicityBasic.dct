@@ -292,7 +292,6 @@ ispunct
 isspace
 isupper
 isxdigit
-l_count
 labs
 longint2double
 longinttohex
@@ -479,7 +478,6 @@ rd
 rd_bit
 read_write
 read_write_bit
-readaverage
 readsensors
 res032
 rp0
@@ -493,18 +491,11 @@ rx9_bit
 rx9d
 rx9d_bit
 s
-s_array
 s_bit
-s1
-s2
-s3
-s4
-s5
-s6
-s7
 sdiv3232l
 sen
 sen_bit
+sensor
 setfdz32
 setfov32
 setfun32
