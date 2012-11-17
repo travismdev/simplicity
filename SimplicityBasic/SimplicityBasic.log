@@ -4,10 +4,10 @@ diagnostics: 0	133	Compilation Started	C:\Users\TravisM\Documents\Coding\simplic
 hint: 1	1015	Hint: Compiling unit "C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas"	SimplicityBasic.mbas
 hint: 204	1010	Hint: Unit "SimplicityBasic.mbas" has been recompiled	SimplicityBasic.mbas
 diagnostics: 0	134	Compiled Successfully	C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas
-diagnostics: 0	139	All files Compiled in 46 ms	 
+diagnostics: 0	139	All files Compiled in 47 ms	 
 hint: 0	1144	Used RAM (bytes): 21 (6%)  Free RAM (bytes): 331 (94%)	Used RAM (bytes): 21 (6%)  Free RAM (bytes): 331 (94%)
 hint: 0	1144	Used ROM (program words): 533 (7%)  Free ROM (program words): 7659 (93%)	Used ROM (program words): 533 (7%)  Free ROM (program words): 7659 (93%)
 diagnostics: 0	145	Project Linked Successfully	SimplicityBasic.mbppi
-diagnostics: 0	140	Linked in 63 ms	 
-diagnostics: 0	141	Project 'SimplicityBasic.mbppi' completed: 141 ms	 
-diagnostics: 0	103	Finished successfully: 16 Nov 2012, 16:18:40	SimplicityBasic.mbppi
+diagnostics: 0	140	Linked in 62 ms	 
+diagnostics: 0	141	Project 'SimplicityBasic.mbppi' completed: 140 ms	 
+diagnostics: 0	103	Finished successfully: 16 Nov 2012, 16:36:11	SimplicityBasic.mbppi
