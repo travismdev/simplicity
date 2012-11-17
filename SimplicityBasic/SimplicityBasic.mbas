@@ -148,6 +148,10 @@ main:
      PWM2_Init(5000)
      PWM1_Start()
      PWM2_Start()
+
+     asm
+        BSF OPTION_REG,RBPU
+     end asm
      
      ' Turn off RBx Pull-Ups
      OPTION_REG.NOT_RBPU = 1
