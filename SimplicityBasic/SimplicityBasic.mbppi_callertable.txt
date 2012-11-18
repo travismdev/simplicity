@@ -8,8 +8,8 @@ main
 			Mul_16x16_U
 		PWM2_Set_Duty
 			Mul_16x16_U
-	InitSensors
 	ReadSensors
+		InitSensors
 	PWM1_Set_Duty
 		Mul_16x16_U
 	PWM2_Set_Duty

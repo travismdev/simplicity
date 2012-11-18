@@ -16,6 +16,14 @@ end sub
 ' for 10us and set the pins as input.
 '-------------------------------------------------------------------------------
 sub procedure InitSensors
+     sensor[1] = 0
+     sensor[2] = 0
+     sensor[3] = 0
+     sensor[4] = 0
+     sensor[5] = 0
+     sensor[6] = 0
+     sensor[7] = 0
+     
      TRISB = 0x00
      PORTB = 0xFF
 
@@ -39,36 +47,38 @@ end sub
 sub procedure ReadSensors
 Dim s_count as Byte
     
+    InitSensors()
+    
     while PORTB.RB7 <> 0
           sensor[1] = sensor[1] + 1
           if sensor[1] >= 30 then break end if
     wend
-    
+
      while PORTB.RB6 <> 0
           sensor[2] = sensor[2] + 1
           if sensor[2] >= 30 then break end if
     wend
-    
+
      while PORTB.RB5 <> 0
           sensor[3] = sensor[3] + 1
-          if sensor[3] >= 30 then break end if
+          if sensor[3] >= 25 then break end if
     wend
-    
+
      while PORTB.RB4 <> 0
           sensor[4] = sensor[4] + 1
-          if sensor[4] >= 30 then break end if
+          if sensor[4] >= 25 then break end if
     wend
-    
+
      while PORTB.RB3 <> 0
           sensor[5] = sensor[5] + 1
-          if sensor[5] >= 30 then break end if
+          if sensor[5] >= 25 then break end if
     wend
-    
+
      while PORTB.RB2 <> 0
           sensor[6] = sensor[6] + 1
           if sensor[6] >= 30 then break end if
     wend
-    
+
      while PORTB.RB1 <> 0
           sensor[7] = sensor[7] + 1
           if sensor[7] >= 30 then break end if
@@ -86,8 +96,8 @@ main:
      TRISA   = 0
      PORTC   = 0
      TRISC   = 0
-     PWM1_Init(5000)
-     PWM2_Init(5000)
+     PWM1_Init(150000)
+     PWM2_Init(150000)
      PWM1_Start()
      PWM2_Start()
      
@@ -109,8 +119,6 @@ main:
 ' Actual program starts here by reading sensors and setting PWM accordingly
 '-------------------------------------------------------------------------------
      while 1
-
-            InitSensors()
             ReadSensors()
             
             if sensor[1] and
@@ -118,7 +126,7 @@ main:
                sensor[3] and
                sensor[4] and
                sensor[5] and
-               sensor[6] > 24 then
+               sensor[6] > 3 then
                StopMotors()
             end if
             
@@ -127,27 +135,27 @@ main:
                sensor[3] and
                sensor[4] and
                sensor[5] and
-               sensor[6] < 22 then
+               sensor[6] <= 2 then
                PWM1_Set_Duty(160)
                PWM2_Set_Duty(160)
             end if
             
-            if sensor[7] < 22 then
+            if sensor[7] <= 2 then
                PWM1_Set_Duty(80)
                PWM2_Set_Duty(200)
             end if
             
-            if sensor[5] or sensor[6] < 22 then
+            if sensor[5] or sensor[6] <= 2 then
                PWM1_Set_Duty(100)
                PWM2_Set_Duty(160)
             end if
 
-            if sensor[3] or sensor[4] < 22 then
+            if sensor[3] or sensor[4] <= 2 then
                PWM1_Set_Duty(160)
                PWM2_Set_Duty(160)
             end if
             
-            if sensor[1] or sensor[2] < 22 then
+            if sensor[1] or sensor[2] <= 2 then
                PWM1_Set_Duty(200)
                PWM2_Set_Duty(80)
             end if
