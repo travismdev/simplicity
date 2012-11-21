@@ -44,7 +44,7 @@ Count=0
 [PLDS]
 Count=0
 [Useses]
-Count=8
+Count=9
 File0=Compact_Flash
 File1=Conversions
 File2=C_Stdlib
@@ -53,6 +53,7 @@ File4=FLASH
 File5=PWM
 File6=Time
 File7=ADC
+File8=Sound
 [EXPANDED NODES]
 Node1=Sources
 Count=1

@@ -164,6 +164,7 @@ cmif
 cmif_bit
 comfrem
 compare_double
+countdown
 cren
 cren_bit
 csrc
@@ -268,6 +269,7 @@ i2c_stop__bit
 ics_auto
 ics_off
 indf
+initmain
 initsensors
 int2double
 intcon
@@ -504,6 +506,8 @@ shorttohex
 shorttostr
 smp
 smp_bit
+sound_init
+sound_play
 spbrg
 spen
 spen_bit

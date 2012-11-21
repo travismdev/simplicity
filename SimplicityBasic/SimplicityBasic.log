@@ -1,15 +1,16 @@
-0	1	mBPic.exe -MSF -DBG -pP16F876A -Y -DL -O11111114 -fo20 -N"C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for PIC\defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for PIC\Uses\P16\" -SP"C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CStdlib.mcl" "__Lib_Conversions.mcl" "__Lib_Time.mcl" "__Lib_ADC_A_C.mcl" "__Lib_FLASH_RW.mcl" "__Lib_PWM_c21.mcl" "__Lib_CF.mcl" "SimplicityBasic.mbas"	 
+0	1	mBPic.exe -MSF -DBG -pP16F876A -GC -Y -DL -O11111114 -fo20 -N"C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbppi" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for PIC\defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroBasic PRO for PIC\Uses\P16\" -SP"C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CStdlib.mcl" "__Lib_Conversions.mcl" "__Lib_Time.mcl" "__Lib_Sound.mcl" "__Lib_ADC_A_C.mcl" "__Lib_FLASH_RW.mcl" "__Lib_PWM_c21.mcl" "__Lib_CF.mcl" "SimplicityBasic.mbas"	 
 diagnostics: 0	155	Available RAM: 352 [bytes], Available ROM: 8192 [bytes]	 
 diagnostics: 0	133	Compilation Started	C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas
 hint: 1	1015	Hint: Compiling unit "C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas"	SimplicityBasic.mbas
-hint: 48	1001	Hint: Variable "s_count" has been declared, but not used	SimplicityBasic.mbas
-hint: 48	1011	Hint: Variable "s_count" has been eliminated by optimizer	SimplicityBasic.mbas
-hint: 165	1010	Hint: Unit "SimplicityBasic.mbas" has been recompiled	SimplicityBasic.mbas
+hint: 111	1001	Hint: Variable "s_count" has been declared, but not used	SimplicityBasic.mbas
+hint: 111	1011	Hint: Variable "s_count" has been eliminated by optimizer	SimplicityBasic.mbas
+hint: 238	1010	Hint: Unit "SimplicityBasic.mbas" has been recompiled	SimplicityBasic.mbas
 diagnostics: 0	134	Compiled Successfully	C:\Users\TravisM\Documents\Coding\simplicity\SimplicityBasic\SimplicityBasic.mbas
 diagnostics: 0	139	All files Compiled in 47 ms	 
-hint: 0	1144	Used RAM (bytes): 23 (7%)  Free RAM (bytes): 329 (93%)	Used RAM (bytes): 23 (7%)  Free RAM (bytes): 329 (93%)
-hint: 0	1144	Used ROM (program words): 595 (7%)  Free ROM (program words): 7597 (93%)	Used ROM (program words): 595 (7%)  Free ROM (program words): 7597 (93%)
+hint: 0	1144	Used RAM (bytes): 25 (7%)  Free RAM (bytes): 327 (93%)	Used RAM (bytes): 25 (7%)  Free RAM (bytes): 327 (93%)
+hint: 0	1144	Used ROM (program words): 659 (8%)  Free ROM (program words): 7533 (92%)	Used ROM (program words): 659 (8%)  Free ROM (program words): 7533 (92%)
 diagnostics: 0	145	Project Linked Successfully	SimplicityBasic.mbppi
-diagnostics: 0	140	Linked in 63 ms	 
-diagnostics: 0	141	Project 'SimplicityBasic.mbppi' completed: 141 ms	 
-diagnostics: 0	103	Finished successfully: 17 Nov 2012, 17:08:18	SimplicityBasic.mbppi
+hint: 0	1004	COFF file successfully generated	COFF file successfully generated
+diagnostics: 0	140	Linked in 280 ms	 
+diagnostics: 0	141	Project 'SimplicityBasic.mbppi' completed: 358 ms	 
+diagnostics: 0	103	Finished successfully: 20 Nov 2012, 18:11:40	SimplicityBasic.mbppi

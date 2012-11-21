@@ -4,7 +4,64 @@ program SimplicityBasic
 Dim sensor as Integer[8]
 
 '-------------------------------------------------------------------------------
-' Emergency motor stop
+' InitMain sets up port direction and default settings and other things we
+' need intialized, I put it here to not clutter the main program space.
+'-------------------------------------------------------------------------------
+sub procedure InitMain
+'-------------------------------------------------------------------------------
+' Setup our port direction and initial values
+'-------------------------------------------------------------------------------
+     ADCON1  = 6
+     PORTA   = 0
+     TRISA   = 0
+     PORTC   = 0
+     TRISC   = 0
+     TRISC.RC4 = 1
+     PWM1_Init(150000)
+     PWM2_Init(150000)
+     PWM1_Start()
+     PWM2_Start()
+
+     ' Turn off RBx Pull-Ups
+     OPTION_REG.NOT_RBPU = 1
+
+'-------------------------------------------------------------------------------
+' Configure our timer for reading the sensors
+'-------------------------------------------------------------------------------
+     OPTION_REG.T0CS = 0
+     OPTION_REG.T0SE = 0
+     OPTION_REG.PSA = 0
+     OPTION_REG.PS0 = 0
+     OPTION_REG.PS1 = 0
+     OPTION_REG.PS2 = 1
+
+'-------------------------------------------------------------------------------
+' Here we set motor directions
+'-------------------------------------------------------------------------------
+     PORTA.RA0 = 0
+     PORTA.RA1 = 1
+     PORTA.RA2 = 0
+     PORTA.RA3 = 1
+
+     ' Set initial duty cycle
+     PWM1_Set_Duty(0)
+     PWM2_Set_Duty(0)
+
+     'Init Sound
+     Sound_Init(PORTC,3)
+     
+     sensor[1] = 0
+     sensor[2] = 0
+     sensor[3] = 0
+     sensor[4] = 0
+     sensor[5] = 0
+     sensor[6] = 0
+     sensor[7] = 0
+     
+end sub
+
+'-------------------------------------------------------------------------------
+' Motor Stop
 '-------------------------------------------------------------------------------
  sub procedure StopMotors
     PWM1_Set_Duty(0)
@@ -12,8 +69,9 @@ Dim sensor as Integer[8]
 end sub
 
 '-------------------------------------------------------------------------------
-' Read the QTR-8RC sensor module, set pins as output and set high then delay
-' for 10us and set the pins as input.
+' Setup the QTR8-RC module for the ReadSensors() routine. Set ports as output
+' and drive the line high, delay 10 us then set the ports as input and then
+' ReadSensors()
 '-------------------------------------------------------------------------------
 sub procedure InitSensors
      sensor[1] = 0
@@ -23,14 +81,14 @@ sub procedure InitSensors
      sensor[5] = 0
      sensor[6] = 0
      sensor[7] = 0
-     
+
      TRISB = 0x00
      PORTB = 0xFF
 
      delay_us(10)
-     
+
      TRISB = 0xFF
-     
+
      ' Set up initial sensor array
      sensor[1] = PORTB.RB7
      sensor[2] = PORTB.RB6
@@ -42,13 +100,18 @@ sub procedure InitSensors
 end sub
 
 '-------------------------------------------------------------------------------
-' Here we actually read the sensor line to find our values
+' Here we actually read the sensor line to find our values by measuring the
+' amount of time it takes for the line to go low
+'
+' Sensors are configured as so:
+' RB7 = Sensor 1, RB6 = Sensor2, RB5 = Sensor3, RB4 = Sensor4, RB3 = Sensor6,
+' RB2 = Sensor7, RB1 = Sensor8
 '-------------------------------------------------------------------------------
 sub procedure ReadSensors
 Dim s_count as Byte
-    
+
     InitSensors()
-    
+
     while PORTB.RB7 <> 0
           sensor[1] = sensor[1] + 1
           if sensor[1] >= 30 then break end if
@@ -83,7 +146,24 @@ Dim s_count as Byte
           sensor[7] = sensor[7] + 1
           if sensor[7] >= 30 then break end if
     wend
+    
 
+end sub
+
+'-------------------------------------------------------------------------------
+' Simple 5 second delay before it starts reading the line, can be turned off
+' if we comment out the Countdown() call in the code at the beginning of main.
+'-------------------------------------------------------------------------------
+sub procedure Countdown
+     Sound_Play(800,250)
+     delay_ms(1000)
+     Sound_Play(800,250)
+     delay_ms(1000)
+     Sound_Play(800,250)
+     delay_ms(1000)
+     Sound_Play(800,250)
+     delay_ms(500)
+     Sound_Play(900,500)
 end sub
 
 '-------------------------------------------------------------------------------
@@ -91,36 +171,29 @@ end sub
 ' then manipulate the data to follow the line
 '-------------------------------------------------------------------------------
 main:
-     ADCON1  = 6
-     PORTA   = 0
-     TRISA   = 0
-     PORTC   = 0
-     TRISC   = 0
-     PWM1_Init(150000)
-     PWM2_Init(150000)
-     PWM1_Start()
-     PWM2_Start()
-     
-     ' Turn off RBx Pull-Ups
-     OPTION_REG.NOT_RBPU = 1
-     
-     ' We are only driving our motors forward (M1)
-     PORTA.RA0 = 0
-     PORTA.RA1 = 1
-     
-     ' We are only driving our motors forward (M2)
-     PORTA.RA2 = 0
-     PORTA.RA3 = 1
-     
-     ' Set initial duty cycle
-     StopMotors()
-     
+
+     InitMain()
+
+'Program will HALT here until we press the button on the robot.
+WaitForPress:
+
+     if PORTC.RC4 = 0 then
+        GOTO BeginMain
+     else
+        GOTO WaitForPress
+     end if
+
 '-------------------------------------------------------------------------------
 ' Actual program starts here by reading sensors and setting PWM accordingly
 '-------------------------------------------------------------------------------
+BeginMain:
+
+     'Countdown for 5 seconds before beginning reading the line.
+     'Countdown()
+     
      while 1
             ReadSensors()
-            
+
             if sensor[1] and
                sensor[2] and
                sensor[3] and
@@ -129,7 +202,7 @@ main:
                sensor[6] > 3 then
                StopMotors()
             end if
-            
+
             if sensor[1] and
                sensor[2] and
                sensor[3] and
@@ -139,12 +212,12 @@ main:
                PWM1_Set_Duty(160)
                PWM2_Set_Duty(160)
             end if
-            
+
             if sensor[7] <= 2 then
                PWM1_Set_Duty(80)
                PWM2_Set_Duty(200)
             end if
-            
+
             if sensor[5] or sensor[6] <= 2 then
                PWM1_Set_Duty(100)
                PWM2_Set_Duty(160)
@@ -154,7 +227,7 @@ main:
                PWM1_Set_Duty(160)
                PWM2_Set_Duty(160)
             end if
-            
+
             if sensor[1] or sensor[2] <= 2 then
                PWM1_Set_Duty(200)
                PWM2_Set_Duty(80)
